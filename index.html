@@ -1,67 +1,151 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Song List</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 { margin-bottom: 16px; }
+        #search {
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        #record-count { margin-bottom: 10px; color: #666; font-size: 0.9em; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        th, td { border: 1px solid #e0e0e0; padding: 10px 12px; text-align: left; }
+        th {
+            background-color: #2c4875;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+        th:hover { background-color: #1a2a47; }
+        .sort-indicator { margin-left: 6px; font-size: 0.75em; opacity: 0.7; }
+        tr:nth-child(even) td { background-color: #f5f7fa; }
+        tr:hover td { background-color: #e8f0fe; }
+        #error-msg { color: #c00; display: none; margin-top: 10px; }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;My Song List&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: sans-serif; padding: 20px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>table { border-collapse: collapse; width: 100%; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>th { background-color: #f2f2f2; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;My Music Library&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;table id="song-table"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr id="table-header"&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;tbody id="table-body"&gt;&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/table&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Load the CSV file</p>
-<p class="p1"><span class="Apple-converted-space">        </span>fetch('songs.csv')</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.then(response =&gt; response.text())</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.then(data =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const rows = data.split('\n');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const tableHeader = document.getElementById('table-header');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const tableBody = document.getElementById('table-body');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>rows.forEach((row, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const columns = row.split(',');</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const tr = document.createElement('tr');</p>
-<p class="p2"><span class="Apple-converted-space">                    </span></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>columns.forEach(column =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>const cell = index === 0 ? document.createElement('th') : document.createElement('td');</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>cell.textContent = column;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>tr.appendChild(cell);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (index === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>tableHeader.appendChild(tr);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>tableBody.appendChild(tr);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <h1>My Music Library</h1>
+    <input type="search" id="search" placeholder="Search songs, artists, albums…" aria-label="Search">
+    <p id="record-count"></p>
+    <p id="error-msg">Could not load songs.csv. Make sure the file is in the same folder as this page.</p>
+    <table id="song-table">
+        <thead><tr id="table-header"></tr></thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+        // Parses a single CSV line, correctly handling double-quoted fields that contain commas.
+        function parseCSVLine(line) {
+            const fields = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const ch = line[i];
+                if (ch === '"') {
+                    if (inQuotes && line[i + 1] === '"') { current += '"'; i++; }
+                    else { inQuotes = !inQuotes; }
+                } else if (ch === ',' && !inQuotes) {
+                    fields.push(current.trim());
+                    current = '';
+                } else {
+                    current += ch;
+                }
+            }
+            fields.push(current.trim());
+            return fields;
+        }
+
+        let allRows = [];
+        let headers = [];
+        let sortCol = -1;
+        let sortAsc = true;
+
+        function renderTable(rows) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            rows.forEach(cols => {
+                const tr = document.createElement('tr');
+                cols.forEach(val => {
+                    const td = document.createElement('td');
+                    td.textContent = val;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            document.getElementById('record-count').textContent =
+                'Showing ' + rows.length + ' of ' + allRows.length + ' songs';
+        }
+
+        function applyFilter() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = query
+                ? allRows.filter(cols => cols.some(v => v.toLowerCase().includes(query)))
+                : allRows.slice();
+            renderTable(filtered);
+        }
+
+        function buildHeader() {
+            const tr = document.getElementById('table-header');
+            tr.innerHTML = '';
+            headers.forEach((label, i) => {
+                const th = document.createElement('th');
+                const span = document.createElement('span');
+                span.className = 'sort-indicator';
+                span.textContent = '⇅';
+                th.textContent = label;
+                th.appendChild(span);
+                th.addEventListener('click', () => {
+                    if (sortCol === i) { sortAsc = !sortAsc; } else { sortCol = i; sortAsc = true; }
+                    tr.querySelectorAll('.sort-indicator').forEach((s, j) => {
+                        s.textContent = j === sortCol ? (sortAsc ? '▲' : '▼') : '⇅';
+                    });
+                    allRows.sort((a, b) => {
+                        const av = a[i] || '', bv = b[i] || '';
+                        const an = parseFloat(av), bn = parseFloat(bv);
+                        if (!isNaN(an) && !isNaN(bn)) return sortAsc ? an - bn : bn - an;
+                        return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+                    });
+                    applyFilter();
+                });
+                tr.appendChild(th);
+            });
+        }
+
+        fetch('songs.csv')
+            .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.text(); })
+            .then(data => {
+                // Strip UTF-8 BOM if present
+                const cleaned = data.charCodeAt(0) === 0xFEFF ? data.slice(1) : data;
+                const lines = cleaned.split(/\r?\n/).filter(l => l.trim() !== '');
+                headers = parseCSVLine(lines[0]);
+                allRows = lines.slice(1).map(parseCSVLine);
+                buildHeader();
+                renderTable(allRows);
+            })
+            .catch(() => { document.getElementById('error-msg').style.display = 'block'; });
+
+        document.getElementById('search').addEventListener('input', applyFilter);
+    </script>
 </body>
 </html>
