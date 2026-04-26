@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;My Song List&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: sans-serif; padding: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>table { border-collapse: collapse; width: 100%; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>th { background-color: #f2f2f2; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;My Music Library&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;table id="song-table"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr id="table-header"&gt;&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;tbody id="table-body"&gt;&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/table&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Load the CSV file</p>
+<p class="p1"><span class="Apple-converted-space">        </span>fetch('songs.csv')</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.then(response =&gt; response.text())</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.then(data =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const rows = data.split('\n');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const tableHeader = document.getElementById('table-header');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const tableBody = document.getElementById('table-body');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>rows.forEach((row, index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const columns = row.split(',');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const tr = document.createElement('tr');</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>columns.forEach(column =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>const cell = index === 0 ? document.createElement('th') : document.createElement('td');</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>cell.textContent = column;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tr.appendChild(cell);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (index === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tableHeader.appendChild(tr);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tableBody.appendChild(tr);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
